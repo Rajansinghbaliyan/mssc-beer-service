@@ -8,7 +8,10 @@ import guru.springframework.msscbeerservice.web.model.BeerDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +19,13 @@ public class BeerServiceImpl implements BeerService {
 
     private final BeerRepository beerRepository;
     private final BeerMapper beerMapper;
+
+    @Override
+    public List<BeerDto> findAll() {
+        return StreamSupport.stream(beerRepository.findAll().spliterator(), true)
+                .map(beerMapper::beerToBeerDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public BeerDto getById(UUID beerId) {

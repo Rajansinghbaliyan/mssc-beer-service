@@ -26,10 +26,10 @@ public class BeerDto {
 
     @Null
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", shape = JsonFormat.Shape.STRING)
-    private OffsetDateTime creationDate;
+    private OffsetDateTime createdAt;
     @Null
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ", shape = JsonFormat.Shape.STRING)
-    private OffsetDateTime lastModificationDate;
+    private OffsetDateTime lastModifiedAt;
 
     @NotBlank
     private String beerName;
@@ -45,5 +45,5 @@ public class BeerDto {
     @NotBlank
     private String upc;
 
-
+    private Integer quantityOnHand;
 }

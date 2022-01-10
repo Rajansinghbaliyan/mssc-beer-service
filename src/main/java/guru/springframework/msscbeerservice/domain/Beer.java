@@ -29,6 +29,7 @@ public class Beer {
     private String beerStyle;
 
     private Integer minOnHand;
+    private Integer quantityOnHand;
 
     @Version
     private Integer version;

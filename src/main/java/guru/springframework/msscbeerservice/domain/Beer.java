@@ -1,11 +1,13 @@
 package guru.springframework.msscbeerservice.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.jmx.export.naming.IdentityNamingStrategy;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -16,6 +18,7 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Beer {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -30,6 +33,7 @@ public class Beer {
 
     private Integer minOnHand;
     private Integer quantityOnHand;
+    private Integer quantityToBrew;
 
     @Version
     private Integer version;

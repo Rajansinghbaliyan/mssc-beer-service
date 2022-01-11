@@ -7,12 +7,12 @@ import guru.springframework.msscbeerservice.web.mapper.BeerMapper;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
 import guru.springframework.msscbeerservice.web.model.BeerPageList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -23,9 +23,25 @@ public class BeerServiceImpl implements BeerService {
 
     @Override
     public BeerPageList findAll(Pageable pageable) {
-        return new BeerPageList(StreamSupport.stream(beerRepository.findAll(pageable).spliterator(), true)
+        Page<Beer> beerPage = beerRepository.findAll(pageable);
+        return new BeerPageList(beerPage
+                .getContent()
+                .stream()
                 .map(beerMapper::beerToBeerDto)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList()),
+                beerPage.getPageable(),
+                beerPage.getTotalElements());
+    }
+
+    @Override
+    public BeerPageList findAll(Pageable pageable, Boolean showInventory) {
+        Page<Beer> beerPage = beerRepository.findAll(pageable);
+        return new BeerPageList(beerPage.getContent()
+                .stream()
+                .map(showInventory ? beerMapper::beerToBeerDto : beerMapper::beerToDtoWithOutInventory)
+                .collect(Collectors.toList()),
+                beerPage.getPageable(),
+                beerPage.getTotalElements());
     }
 
     @Override

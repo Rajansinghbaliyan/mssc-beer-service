@@ -25,11 +25,12 @@ public class BeerController {
 
     @GetMapping("/")
     public ResponseEntity<BeerPageList> findAll(@RequestParam(defaultValue = "25") int pageSize,
-                                                @RequestParam(defaultValue = "0") int pageNumber){
+                                                @RequestParam(defaultValue = "0") int pageNumber,
+                                                @RequestParam(defaultValue = "false") boolean showInventory){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(beerService.findAll(PageRequest.of(pageNumber,pageSize)));
+                .body(beerService.findAll(PageRequest.of(pageNumber,pageSize),showInventory));
     }
 
     @GetMapping("/{uuid}")

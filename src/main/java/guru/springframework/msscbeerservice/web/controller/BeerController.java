@@ -2,7 +2,11 @@ package guru.springframework.msscbeerservice.web.controller;
 
 import guru.springframework.msscbeerservice.services.BeerService;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
+import guru.springframework.msscbeerservice.web.model.BeerPageList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +24,12 @@ public class BeerController {
     private final BeerService beerService;
 
     @GetMapping("/")
-    public ResponseEntity<List<BeerDto>> findAll(){
+    public ResponseEntity<BeerPageList> findAll(@RequestParam(defaultValue = "25") int pageSize,
+                                                @RequestParam(defaultValue = "0") int pageNumber){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(beerService.findAll());
+                .body(beerService.findAll(PageRequest.of(pageNumber,pageSize)));
     }
 
     @GetMapping("/{uuid}")

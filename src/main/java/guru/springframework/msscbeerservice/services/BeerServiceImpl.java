@@ -5,10 +5,11 @@ import guru.springframework.msscbeerservice.repository.BeerRepository;
 import guru.springframework.msscbeerservice.web.controller.NotFoundException;
 import guru.springframework.msscbeerservice.web.mapper.BeerMapper;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
+import guru.springframework.msscbeerservice.web.model.BeerPageList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -21,10 +22,10 @@ public class BeerServiceImpl implements BeerService {
     private final BeerMapper beerMapper;
 
     @Override
-    public List<BeerDto> findAll() {
-        return StreamSupport.stream(beerRepository.findAll().spliterator(), true)
+    public BeerPageList findAll(Pageable pageable) {
+        return new BeerPageList(StreamSupport.stream(beerRepository.findAll(pageable).spliterator(), true)
                 .map(beerMapper::beerToBeerDto)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     @Override

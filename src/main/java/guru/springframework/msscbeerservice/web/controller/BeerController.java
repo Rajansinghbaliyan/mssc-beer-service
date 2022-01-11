@@ -4,9 +4,7 @@ import guru.springframework.msscbeerservice.services.BeerService;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
 import guru.springframework.msscbeerservice.web.model.BeerPageList;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -26,19 +23,27 @@ public class BeerController {
     @GetMapping("/")
     public ResponseEntity<BeerPageList> findAll(@RequestParam(defaultValue = "25") int pageSize,
                                                 @RequestParam(defaultValue = "0") int pageNumber,
-                                                @RequestParam(defaultValue = "false") boolean showInventory){
+                                                @RequestParam(defaultValue = "false") boolean showInventory) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(beerService.findAll(PageRequest.of(pageNumber,pageSize),showInventory));
+                .body(beerService.findAll(PageRequest.of(pageNumber, pageSize), showInventory));
     }
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<BeerDto> getById(@NotNull @PathVariable String uuid) {
+    public ResponseEntity<BeerDto> getById(@NotNull @PathVariable UUID uuid) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(beerService.getById(UUID.fromString(uuid)));
+                .body(beerService.getById(uuid));
+    }
+
+    @GetMapping("/upc/{upc}")
+    public ResponseEntity<BeerDto> getByUpc(@PathVariable String upc) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(beerService.findBeerByUpc(upc));
     }
 
     @PostMapping("/")

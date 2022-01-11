@@ -52,6 +52,13 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
+    public BeerDto findBeerByUpc(String upc) {
+        return beerMapper.beerToBeerDto(
+                beerRepository.findBeerByUpc(upc).orElseThrow(NotFoundException::new)
+        );
+    }
+
+    @Override
     public BeerDto saveNewBeer(BeerDto beerDto) {
         return beerMapper.beerToBeerDto(beerRepository.save(beerMapper.beerDtoToBeer(beerDto)));
     }

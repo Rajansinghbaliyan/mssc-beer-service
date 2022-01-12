@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-@Slf4j
 @NoArgsConstructor
 public abstract class BeerMapperDecorator implements BeerMapper {
     private BeerInventoryService beerInventoryService;
@@ -34,8 +33,6 @@ public abstract class BeerMapperDecorator implements BeerMapper {
     public BeerDto beerToBeerDto(Beer beer) {
         BeerDto dto = mapper.beerToBeerDto(beer);
         dto.setQuantityOnHand(beerInventoryService.getOnHandQuantityByBeerId(dto.getId()));
-
-        log.debug("The Beer get Id:" + dto.getId());
         return dto;
     }
 

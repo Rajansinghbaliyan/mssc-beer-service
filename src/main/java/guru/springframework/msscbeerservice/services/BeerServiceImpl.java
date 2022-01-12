@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,10 +46,10 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    public BeerDto getById(UUID beerId) {
-        return beerMapper.beerToBeerDto(
-                beerRepository.findById(beerId).orElseThrow(NotFoundException::new)
-        );
+    public BeerDto getById(UUID beerId, Boolean showInventory) {
+        Beer beer = beerRepository.findById(beerId).orElseThrow(NotFoundException::new);
+        Function<Beer, BeerDto> mapper = showInventory ? beerMapper::beerToBeerDto : beerMapper::beerToDtoWithOutInventory;
+        return mapper.apply(beer);
     }
 
     @Override

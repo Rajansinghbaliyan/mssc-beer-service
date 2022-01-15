@@ -46,4 +46,10 @@ public class BeerDto {
     private String upc;
 
     private Integer quantityOnHand;
+
+    private Integer minOnHand;
+
+    public Boolean shouldStartBrew(){
+        return minOnHand > quantityOnHand;
+    }
 }

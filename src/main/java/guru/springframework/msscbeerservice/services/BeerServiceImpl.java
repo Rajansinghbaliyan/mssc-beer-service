@@ -7,16 +7,20 @@ import guru.springframework.msscbeerservice.web.mapper.BeerMapper;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
 import guru.springframework.msscbeerservice.web.model.BeerPageList;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BeerServiceImpl implements BeerService {
 
     private final BeerRepository beerRepository;
@@ -32,6 +36,14 @@ public class BeerServiceImpl implements BeerService {
                 .collect(Collectors.toList()),
                 beerPage.getPageable(),
                 beerPage.getTotalElements());
+    }
+
+    @Override
+    public List<BeerDto> findAllBeer() {
+        log.info("Running Brewing Service");
+        return StreamSupport.stream(beerRepository.findAll().spliterator(),true)
+                .map(beerMapper::beerToBeerDto)
+                .collect(Collectors.toList());
     }
 
     @Override

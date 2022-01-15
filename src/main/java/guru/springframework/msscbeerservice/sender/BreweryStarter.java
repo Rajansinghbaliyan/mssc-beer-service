@@ -18,14 +18,13 @@ public class BreweryStarter {
 
     private final JmsTemplate jmsTemplate;
 
-    @Scheduled(fixedRate = 3000)
+//    @Scheduled(fixedRate = 3000)
     public void startBrewring(){
         BeerInventoryDto dto = BeerInventoryDto.builder()
                 .beerId(UUID.randomUUID())
                 .build();
 
         jmsTemplate.convertAndSend(JmsConfig.BREWERY_QUEUE,dto);
-        log.info("Brewing initiated for Beer Id: "+dto.getBeerId());
     }
 
 }

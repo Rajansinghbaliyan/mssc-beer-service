@@ -21,11 +21,16 @@ public class BrewBeer {
     @Scheduled(fixedRate = 4000)
     public void brewingBeer() {
         log.info("Brewing Started");
-        beerService.findAllBeer()
-                .parallelStream()
-                .filter(BeerDto::shouldStartBrew)
-                .forEach(
-                        beerDto -> jmsTemplate.convertAndSend(JmsConfig.BREW_BEER_QUEUE, new BeerEvent(beerDto))
-                );
+        try{
+            beerService.findAllBeer()
+                    .parallelStream()
+                    .filter(BeerDto::shouldStartBrew)
+                    .forEach(
+                            beerDto -> jmsTemplate.convertAndSend(JmsConfig.BREW_BEER_QUEUE, new BeerEvent(beerDto))
+                    );
+        }
+        catch (Exception e){
+            log.error(e.getMessage());
+        }
     }
 }

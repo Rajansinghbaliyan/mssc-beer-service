@@ -1,6 +1,6 @@
 package guru.springframework.msscbeerservice.listener;
 
-import guru.sfg.common.Events.BeerInventoryEvent;
+import guru.sfg.common.events.BeerInventoryEvent;
 import guru.springframework.msscbeerservice.config.jms.JmsConfig;
 import guru.springframework.msscbeerservice.domain.Beer;
 import guru.springframework.msscbeerservice.event.BeerEvent;

@@ -2,11 +2,9 @@ package guru.springframework.msscbeerservice.sender;
 
 import guru.springframework.msscbeerservice.config.jms.JmsConfig;
 import guru.springframework.msscbeerservice.services.inventory.model.BeerInventoryDto;
-import guru.springframework.msscbeerservice.web.model.BeerDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

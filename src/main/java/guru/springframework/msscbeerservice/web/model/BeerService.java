@@ -1,8 +1,5 @@
-package guru.springframework.msscbeerservice.services;
+package guru.springframework.msscbeerservice.web.model;
 
-import guru.springframework.msscbeerservice.domain.Beer;
-import guru.springframework.msscbeerservice.web.model.BeerDto;
-import guru.springframework.msscbeerservice.web.model.BeerPageList;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

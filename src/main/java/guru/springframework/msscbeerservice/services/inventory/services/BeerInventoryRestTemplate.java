@@ -34,16 +34,28 @@ public class BeerInventoryRestTemplate implements BeerInventoryService {
     public Integer getOnHandQuantityByBeerId(UUID beerId) {
         ResponseEntity<List<BeerInventoryDto>> response = restTemplate
                 .exchange(getUrl(beerId), HttpMethod.GET, null,
-                        new ParameterizedTypeReference<List<BeerInventoryDto>>() {});
+                        new ParameterizedTypeReference<List<BeerInventoryDto>>() {
+                        });
 
-        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null){
+        if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
             return response.getBody()
                     .stream()
                     .mapToInt(BeerInventoryDto::getQuantityOnHand)
                     .sum();
-        } else{
+        } else {
             throw new NotFoundException();
         }
 
+    }
+
+    @Override
+    public BeerInventoryDto createNewInventory(BeerInventoryDto dto) {
+        ResponseEntity<BeerInventoryDto> response = restTemplate
+                .postForEntity(getUrl(dto.getBeerId()), dto, BeerInventoryDto.class);
+
+        if (response.getStatusCode() == HttpStatus.CREATED && response.getBody() != null) {
+            return response.getBody();
+        } else
+            return null;
     }
 }

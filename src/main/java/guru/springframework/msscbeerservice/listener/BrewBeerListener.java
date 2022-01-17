@@ -26,6 +26,8 @@ public class BrewBeerListener {
     public void listener(BeerEvent event) {
         BeerDto beerDto = event.getBeerDto();
         try {
+            log.info("Initiating brewing for BeerId: " + beerDto.getId());
+
             Beer beer = beerRepository.findById(beerDto.getId()).orElseThrow(NotFoundException::new);
 
             jmsTemplate.convertAndSend(

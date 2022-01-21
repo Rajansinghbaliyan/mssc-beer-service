@@ -6,5 +6,6 @@ import java.util.UUID;
 
 public interface BeerInventoryService {
     Integer getOnHandQuantityByBeerId(UUID beerId);
+
     BeerInventoryDto createNewInventory(BeerInventoryDto dto);
 }

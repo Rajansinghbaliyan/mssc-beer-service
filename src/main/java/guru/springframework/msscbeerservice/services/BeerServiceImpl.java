@@ -42,7 +42,7 @@ public class BeerServiceImpl implements BeerService {
     @Override
     public List<BeerDto> findAllBeer() {
         log.info("Running Brewing Service");
-        return StreamSupport.stream(beerRepository.findAll().spliterator(),true)
+        return StreamSupport.stream(beerRepository.findAll().spliterator(), true)
                 .map(beerMapper::beerToBeerDto)
                 .collect(Collectors.toList());
     }

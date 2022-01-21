@@ -25,7 +25,7 @@ public class DefaultLoader implements CommandLineRunner {
     }
 
     public void loadBeer() {
-        if(beerRepository.count() == 0){
+        if (beerRepository.count() == 0) {
 
             beerRepository.save(Beer.builder()
                     .beerName("Mango Bobs")
@@ -53,5 +53,6 @@ public class DefaultLoader implements CommandLineRunner {
                     .upc(BEER_3_UPC)
                     .price(new BigDecimal("11.95"))
                     .build());
-        }    }
+        }
+    }
 }

@@ -36,16 +36,16 @@ public class BeerController {
     @GetMapping("/{uuid}")
     public ResponseEntity<BeerDto> getById(@NotNull @PathVariable UUID uuid,
                                            @RequestParam(defaultValue = "false") boolean showInventory) {
-        log.debug("Get Beer For Id: "+uuid);
+        log.debug("Get Beer For Id: " + uuid);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(beerService.getById(uuid,showInventory));
+                .body(beerService.getById(uuid, showInventory));
     }
 
     @GetMapping("/upc/{upc}")
     public ResponseEntity<BeerDto> getByUpc(@PathVariable String upc) {
-        log.debug("Get Beer Fro Upc: "+upc);
+        log.debug("Get Beer Fro Upc: " + upc);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -63,7 +63,7 @@ public class BeerController {
 
     @PutMapping("/{beerId}")
     public ResponseEntity<BeerDto> updateBeer(@PathVariable String beerId, @Validated @RequestBody BeerDto beerDto) {
-        log.debug("Put For Beer Id: "+beerId);
+        log.debug("Put For Beer Id: " + beerId);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .contentType(MediaType.APPLICATION_JSON)

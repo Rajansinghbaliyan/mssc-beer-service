@@ -50,7 +50,7 @@ public class BeerDto {
 
     private Integer minOnHand;
 
-    public Boolean shouldStartBrew(){
+    public Boolean shouldStartBrew() {
         return minOnHand > quantityOnHand;
     }
 }

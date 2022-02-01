@@ -4,6 +4,7 @@ import guru.springframework.msscbeerservice.services.inventory.model.BeerInvento
 import guru.springframework.msscbeerservice.web.controller.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -15,10 +16,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
+@Profile("!local-discovery")
 public class BeerInventoryRestTemplate implements BeerInventoryService {
     private final RestTemplate restTemplate;
     private final String HOST;
-    private String BASE;
+    public static final String BASE = "/api/v1/beer/{beerId}/inventory";
 
     public BeerInventoryRestTemplate(RestTemplateBuilder restTemplateBuilder,
                                      @Value("${beer_inventory_host}") String HOST) {
